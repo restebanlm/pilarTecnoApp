@@ -1,9 +1,7 @@
 import {LOG_IN} from '../constants';
-
 const initialState = {
   user: null,
 };
-
 export default (state = initialState, action) => {
   if (action.type === LOG_IN) {
     return {
@@ -12,4 +10,5 @@ export default (state = initialState, action) => {
     };
   }
   return {...state};
+  
 };

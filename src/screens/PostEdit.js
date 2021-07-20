@@ -15,26 +15,22 @@ import {
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-class Posts extends React.Component {
+export default class PostEdit extends React.Component {
+  _onPostPress = () => {
+    Alert.alert('Hola', 'Ya te encuentras en Post', [
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
+  };
+
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <ImageBackground
           style={{height}}
           source={require('../assets/images/background.jpg')}>
-          <View
-            style={{
-              height: '100%',
-              backgroundColor: 'blue',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text>POSTS</Text>
-          </View>
+          <Text>PostEdit</Text>
         </ImageBackground>
       </SafeAreaView>
     );
   }
 }
-
-export default Posts;

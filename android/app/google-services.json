@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:969846108035:android:2601385d52cdcb45b1d0b6",
+        "mobilesdk_app_id": "1:969846108035:android:8cff93520c3983a0b1d0b6",
         "android_client_info": {
-          "package_name": "com.esteban.pilartecnoapp"
+          "package_name": "com.teby.pilartecnoapp"
         }
       },
       "oauth_client": [

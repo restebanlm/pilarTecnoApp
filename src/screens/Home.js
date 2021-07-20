@@ -11,13 +11,19 @@ import {
   View,
   Alert,
 } from 'react-native';
+import {ProfileStackScreen} from '../routs/ProfileStack';
+import Profile from '../screens/Profile';
+import {createStackNavigator} from '@react-navigation/stack';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-class Home extends React.Component {
+export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   _onHomePress = () => {
-    Alert.alert('Hola', 'Ya te encuentras ahí', [
+    Alert.alert('Hola', 'Ya te encuentras en Inicio.', [
       {text: 'OK', onPress: () => console.log('OK Pressed')},
     ]);
   };
@@ -33,22 +39,40 @@ class Home extends React.Component {
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 onPress={() => this._onHomePress()}
-                style={[styles.button]}>
-                <Text style={styles.text}>PRINCIPAL</Text>
+                style={[
+                  styles.button,
+                  {backgroundColor: 'rgba(127, 127, 127, 0.6)'},
+                ]}>
+                <Text style={styles.text}>INICIO</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.button]}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Perfil')}
+                style={[
+                  styles.button,
+                  {backgroundColor: 'rgba(127, 127, 127, 0.6)'},
+                ]}>
                 <Text style={styles.text}>PERFIL</Text>
               </TouchableOpacity>
             </View>
 
             <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={[styles.button]}>
-                <Text style={styles.text}>POSTEOS</Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Publicaciones')}
+                style={[
+                  styles.button,
+                  {backgroundColor: 'rgba(127, 127, 127, 0.6)'},
+                ]}>
+                <Text style={styles.text}>POSTS</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.button]}>
-                <Text style={styles.text}>MAPAS</Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Mapa')}
+                style={[
+                  styles.button,
+                  {backgroundColor: 'rgba(127, 127, 127, 0.6)'},
+                ]}>
+                <Text style={styles.text}>MAPA</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -60,20 +84,18 @@ class Home extends React.Component {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
   },
   button: {
     margin: width / 20,
-    height: width / 5,
+    height: width / 2.5,
     width: width / 2.5,
-    borderRadius: 15,
+    borderRadius: 35,
     justifyContent: 'center',
-    backgroundColor: 'rgba(64, 37, 38, 0.8)',
+    backgroundColor: '#fff',
     zIndex: 1,
   },
 });
-
-export default Home;

@@ -1,19 +1,25 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {
   SafeAreaView,
+  Dimensions,
+  StyleSheet,
   Text,
   ImageBackground,
   TouchableOpacity,
   View,
-  StatusBar,
+  Alert,
 } from 'react-native';
-import {Button} from 'react-native-elements';
-// import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import AsyncStorage from 'react-native';
+import {Input, Button} from 'react-native-elements';
 import {connect} from 'react-redux';
-import actions from '../store/actions';
+import {actions} from '../store';
+import auth from '@react-native-firebase/auth';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Home from './Home';
+import user from '../store/reducers/user';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -23,57 +29,121 @@ GoogleSignin.configure({
     '969846108035-mp20i2ss3vumb9qbsepif8nk7jga88o1.apps.googleusercontent.com',
 });
 
-export default class Login extends Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      email: '',
+      photoURL: '',
+      name: '',
+      password: '',
+    };
   }
 
   onGoogleButtonPress = async () => {
     // Get the users ID token
     const {idToken} = await GoogleSignin.signIn();
-
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
     // Sign-in the user with the credential
     return auth().signInWithCredential(googleCredential);
   };
 
   render() {
+    const {email, photoURL, name, password} = this.state;
     return (
       <SafeAreaView style={{flex: 1}}>
-        <StatusBar style={{backgroundColor: 'green'}} />
         <View style={styles.content}>
           <ImageBackground
-            style={styles.backImagen}
+            style={{width, height}}
             source={require('../assets/images/background.jpg')}>
-            <View>
-              <Text style={styles.text}>Ingresa con ...</Text>
-            </View>
+            <Text style={styles.text}> INICIAR SESIÓN </Text>
+            <Input
+              style={styles.input}
+              placeholder="Correo electrónico"
+              value={email}
+              onChangeText={em => this.setState({email: em})}
+            />
 
-            <View style={styles.buttonsContainer}>
-              <Button
-                style={styles.button}
-                title="Continuar con Google..."
+            <Input
+              style={styles.input}
+              placeholder="Contraseña"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={psw => this.setState({password: psw})}
+            />
+
+            <TouchableOpacity
+              style={[
+                styles.button,
+                {backgroundColor: 'rgba(85, 77, 77, 0.8)'},
+              ]}
+              onPress={() => {
+                email,
+                  password
+                    ? auth()
+                        .signInWithEmailAndPassword(email, password)
+                        .then(async data => {
+                          console.log('Signed in with e-mail!');
+                          if (data) {
+                            console.log(
+                              'res login: ' + JSON.stringify(data.user),
+                            );
+                            try {
+                              await AsyncStorage.setItem(
+                                'isloged',
+                                JSON.stringify(data.user),
+                              );
+                            } catch (e) {
+                              console.log('Hubo un error :' + e);
+                            }
+                            this.props.setUser(data.user);
+                          }
+                        })
+                        .catch(err => {
+                          console.log(err);
+                        })
+                    : Alert.alert('complete todos los campos');
+              }}>
+              <Text style={styles.text}>INGRESAR</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Create')}
+              style={[
+                styles.button,
+                {backgroundColor: 'rgba(85, 77, 77, 0.8)'},
+              ]}>
+              <Text style={styles.text}>CREAR USUARIO</Text>
+            </TouchableOpacity>
+            <Text style={styles.text}>
+              <GoogleSigninButton
+                style={{width: 200, height: 50}}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Ligth}
                 onPress={() =>
-                  this.onGoogleButtonPress().then(async () => {
-                    console.log('Signed in with Google!');
-                    if(data){
-                      console.log('Login: ' + JSON.stringify(data.user));
-                      try {
-                        await AsyncStorage.setItem('islogged', true);
-                      } catch (error) {
-                        console.log('Hubo un error: ' + error);
+                  this.onGoogleButtonPress()
+                    .then(async data => {
+                      console.log('Registrado con Google');
+                      if (data) {
+                        console.log('Login: ' + JSON.stringify(data.user));
+                        try {
+                          await AsyncStorage.setItem(
+                            'isloged',
+                            JSON.stringify(data.user),
+                          );
+                        } catch (e) {
+                          console.log('Hubo un error:' + e);
+                        }
+                        this.props.setUser(data.user);
                       }
-                      this.props.setUser(data.user);
-                    }
-                    
-                  })
+                    })
+                    .catch(err => {
+                      console.log('Errorazo: ' + err);
+                    })
                 }
               />
-              <Button style={styles.button} title="Continuar con ---..." />
-            </View>
+            </Text>
           </ImageBackground>
         </View>
       </SafeAreaView>
@@ -83,42 +153,41 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   content: {
-    flex: 1,
-  },
-  backImagen: {
-    height,
-    width,
     justifyContent: 'center',
     alignItems: 'center',
+    alignContent: 'center',
   },
+
   text: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
+    color: '#FFF',
     textAlign: 'center',
-    color: 'white',
+    marginTop: 10,
   },
-  button: {
+  input: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000',
+    textAlign: 'center',
+    backgroundColor: '#F4ECF7',
     margin: width / 20,
-    borderRadius: 15,
-    width: width / 1.5,
-    borderRadius: 15,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    zIndex: 1,
   },
-  buttonsContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 20,
+
+  button: {
+    margin: 10,
+    marginLeft: 100,
+    width: width / 2,
+    height: height / 18,
+    borderRadius: 9,
   },
 });
 
 const mapDispatchToProps = dispatch => ({
-  setUser: data => dispatch(action.user.setUser(data)),
+  setUser: data => dispatch(actions.user.setUser(data)),
 });
-
 const mapStateToProps = state => ({
-  user: state.data.user,
+  user: state.user.user,
 });
 
-export default connect(mapDispatchToProps, mapStateToProps)((Login))
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -15,26 +15,22 @@ import {
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 
-class Map extends React.Component {
+export default class Map extends React.Component {
+  _onMapPress = () => {
+    Alert.alert('Hola', 'Ya te encuentras en Map', [
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
+  };
+
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <ImageBackground
           style={{height}}
           source={require('../assets/images/background.jpg')}>
-          <View
-            style={{
-              height: '100%',
-              backgroundColor: 'red',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text>MAPA</Text>
-          </View>
+          <Text> Map </Text>
         </ImageBackground>
       </SafeAreaView>
     );
   }
 }
-
-export default Map;

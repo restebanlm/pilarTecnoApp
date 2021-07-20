@@ -1,5 +1,5 @@
 {
-  "name": "pilarTectoApp",
+  "name": "pilartectoapp",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,6 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-native-fontawesome": "^0.2.6",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^12.1.0",
@@ -26,7 +29,9 @@
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",
+    "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^8.1.0",
+    "react-navigation": "^4.4.4",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-logger": "^3.0.6",
@@ -44,5 +49,17 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/restebanlm/pilarTecnoApp.git"
+  },
+  "author": "Esteban Luna Mercado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/restebanlm/pilarTecnoApp/issues"
+  },
+  "homepage": "https://github.com/restebanlm/pilarTecnoApp#readme",
+  "description": ""
 }
