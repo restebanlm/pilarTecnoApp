@@ -9,6 +9,7 @@ const Stack = createStackNavigator();
 
 const AppStack = props => {
   let islogged = false;
+  let isLoadingApp = false;
   try {
     islogged = await AsyncStorage.getItem('islogged');
     if (islogged !== null) {

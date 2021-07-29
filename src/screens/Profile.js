@@ -113,6 +113,18 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  button: {
+    backgroundColor: 'rgba(127, 127, 127, 0.6)',
+    margin: width / 60,
+    marginLeft: width / 4,
+    marginRight: width / 4,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });
 const mapDispatchToProps = dispatch => ({
   setUser: ({user}) => dispatch(actions.user.setUser({user})),
