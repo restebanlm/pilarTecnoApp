@@ -2,12 +2,14 @@
   package="com.teby.pilartecnoapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
-      android:roundIcon="@mipmap/ic_launcher_round"
+      android:roundIcon="@mipmap/ic_launcher"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
       <activity
@@ -20,6 +22,12 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+
+        <meta-data
+          android:name="com.google.android.geo.API_KEY"
+          android:value="AIzaSyBnpXGGpDUYzdSHc28OW4VVWSPtn7j0d7c"/>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
       </activity>
     </application>
 </manifest>
